@@ -1,4 +1,4 @@
-<form class="formulaire" [formGroup]="formulaire">
+<form class="formulaire" [formGroup]="formulaire" (ngSubmit)="onInscription()">
   <mat-form-field>
     <mat-label>Email</mat-label>
     <input
@@ -8,10 +8,9 @@
     />
 
     @if(formulaire.get("email")?.hasError('required')){
-        <mat-error>L'email est obligatoire</mat-error>
-    }
-    @if(formulaire.get("email")?.hasError('email')){
-        <mat-error>L'email est mal formé</mat-error>
+    <mat-error>L'email est obligatoire</mat-error>
+    } @if(formulaire.get("email")?.hasError('email')){
+    <mat-error>L'email est mal formé</mat-error>
     }
   </mat-form-field>
 
@@ -20,6 +19,7 @@
     <input
       matInput
       formControlName="motDePasse"
+      (change)="verifierMotDePasseIdentique()"
       [type]="afficheMotDePasse ? 'text' : 'password'"
     />
     <button
@@ -40,7 +40,13 @@
 
   <mat-form-field>
     <mat-label>Confirmer le mot de passe</mat-label>
-    <input matInput [type]="afficheMotDePasseConfirme ? 'text' : 'password'" />
+    <input
+      matInput
+      [(ngModel)]="confirmationMotDePasse"
+      [ngModelOptions]="{ standalone: true }"
+      (change)="verifierMotDePasseIdentique()"
+      [type]="afficheMotDePasseConfirme ? 'text' : 'password'"
+    />
     <button
       type="button"
       mat-icon-button
@@ -54,6 +60,10 @@
       }}</mat-icon>
     </button>
   </mat-form-field>
+
+  @if(motDePasseDifferent) {
+  <mat-error>Les mots de passe ne sont pas identiques</mat-error>
+  }
 
   <button type="submit" mat-raised-button color="primary">
     Créer mon compte

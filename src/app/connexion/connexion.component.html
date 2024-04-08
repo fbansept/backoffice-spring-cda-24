@@ -16,5 +16,9 @@
     <mat-error>Le mot de passe est obligatoire</mat-error>
   </mat-form-field>
 
+  @if(erreurConnexion) {
+  <mat-error>Les identifiants sont incorrects</mat-error>
+  }
+
   <button mat-raised-button color="primary">Se connecter</button>
 </form>

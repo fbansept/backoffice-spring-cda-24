@@ -36,6 +36,8 @@ export class ConnexionComponent {
     motDePasse: ['root', [Validators.required]],
   });
 
+  erreurConnexion: boolean = false;
+
   onConnexion() {
     if (this.formulaire.valid) {
       this.http
@@ -43,9 +45,15 @@ export class ConnexionComponent {
           'http://localhost:8080/connexion',
           this.formulaire.value
         )
-        .subscribe((resultat) => {
-          localStorage.setItem('jwt', resultat.jwt);
-          this.router.navigateByUrl('/accueil');
+        .subscribe({
+          next: (resultat) => {
+            localStorage.setItem('jwt', resultat.jwt);
+            this.router.navigateByUrl('/accueil');
+          },
+          error: (reponse) => {
+            //alert('Les identifiants sont incorrets');
+            this.erreurConnexion = true;
+          },
         });
     }
   }

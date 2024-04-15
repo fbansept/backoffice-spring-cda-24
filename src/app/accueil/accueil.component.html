@@ -1,12 +1,20 @@
 <div class="container">
   <div class="row">
-   
     @for(produit of listeProduit; track produit.id) {
 
     <div class="col-6 mt-4">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>{{ produit.nom }}</mat-card-title>
+          <mat-card-title>
+            <span>{{ produit.nom }}</span>
+
+            @for (etiquette of produit.listeEtiquettes; track $index) {
+            <app-label
+              [couleur]="etiquette.couleur"
+              [texte]="etiquette.designation"
+            ></app-label>
+            }
+          </mat-card-title>
           <mat-card-subtitle>{{ produit.code }}</mat-card-subtitle>
         </mat-card-header>
         <img
@@ -22,7 +30,13 @@
         <mat-card-actions>
           <button mat-raised-button color="primary">Ajouter au panier</button>
           <button mat-raised-button color="accent">Modifier</button>
-          <button mat-raised-button color="warn" (click)="onSupprimerProduit(produit.id)">Supprimer</button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="onSupprimerProduit(produit.id)"
+          >
+            Supprimer
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>

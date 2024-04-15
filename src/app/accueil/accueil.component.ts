@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { LabelComponent } from "../label/label.component";
 
 @Component({
-  selector: 'app-accueil',
-  standalone: true,
-  imports: [MatCardModule, MatButtonModule],
-  templateUrl: './accueil.component.html',
-  styleUrl: './accueil.component.scss',
+    selector: 'app-accueil',
+    standalone: true,
+    templateUrl: './accueil.component.html',
+    styleUrl: './accueil.component.scss',
+    imports: [MatCardModule, MatButtonModule, LabelComponent]
 })
 export class AccueilComponent implements OnInit {
   http: HttpClient = inject(HttpClient);

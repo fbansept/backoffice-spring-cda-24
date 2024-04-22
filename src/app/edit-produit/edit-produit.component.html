@@ -21,29 +21,39 @@
 
   <mat-form-field>
     <mat-label>Etat</mat-label>
-    <mat-select formControlName="etat">
+    <mat-select formControlName="etat" [compareWith]="comparateurParId">
       @for(etat of listeEtat; track etat.id){
       <mat-option [value]="etat">{{ etat.designation }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
 
-  <!-- <mat-form-field>
+  <mat-form-field>
     <mat-label>Etiquettes</mat-label>
-    <mat-select formControlName="listeEtiquettes" multiple>
+    <mat-select
+      formControlName="listeEtiquettes"
+      multiple
+      [compareWith]="comparateurParId"
+    >
       @for(etiquette of listeEtiquettes; track etiquette.id){
       <mat-option [value]="etiquette">{{ etiquette.designation }}</mat-option>
       }
     </mat-select>
-  </mat-form-field> -->
+  </mat-form-field>
 
-  <mat-chip-listbox multiple formControlName="listeEtiquettes">
+  <!-- <mat-chip-listbox
+    multiple
+    formControlName="listeEtiquettes"
+    [compareWith]="comparateurParId"
+  >
     @for(etiquette of listeEtiquettes; track etiquette.id){
-        <mat-chip-option [value]="etiquette">{{etiquette.designation}}</mat-chip-option>
+    <mat-chip-option [value]="etiquette">{{
+      etiquette.designation
+    }}</mat-chip-option>
     }
-  </mat-chip-listbox>
+  </mat-chip-listbox> -->
 
   <button mat-raised-button color="primary" type="submit">
-    Ajouter le produit
+    {{ idProduit == null ? "Ajouter le produit" : "Modifier le produit" }}
   </button>
 </form>

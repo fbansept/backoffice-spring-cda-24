@@ -14,12 +14,38 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        @if(authentification.utilisateur) {
         <li class="nav-item">
-          <a class="nav-link active" routerLink="/connexion">Connexion</a>
+          <button class="nav-link" (click)="onDeconnexion()">
+            Déconnexion
+          </button>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/inscription">Inscription</a>
+          <a
+            class="nav-link"
+            routerLinkActive="actuelle"
+            routerLink="/profil"
+            >{{ authentification.utilisateur.sub }}</a
+          >
         </li>
+        }@else {
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="actuelle"
+            routerLink="/connexion"
+            >Connexion</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="actuelle"
+            routerLink="/inscription"
+            >Inscription</a
+          >
+        </li>
+        }
       </ul>
       <form class="d-flex">
         <input

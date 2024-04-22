@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthentificationService } from '../authentification.service';
 
 @Component({
   selector: 'app-connexion',
@@ -30,6 +31,7 @@ export class ConnexionComponent {
   formBuilder: FormBuilder = inject(FormBuilder);
   http: HttpClient = inject(HttpClient);
   router: Router = inject(Router);
+  authentification = inject(AuthentificationService);
 
   formulaire: FormGroup = this.formBuilder.group({
     email: ['a@a.com', [Validators.email, Validators.required]],
@@ -48,6 +50,7 @@ export class ConnexionComponent {
         .subscribe({
           next: (resultat) => {
             localStorage.setItem('jwt', resultat.jwt);
+            this.authentification.authentificationAvecJwtLocalStorage();
             this.router.navigateByUrl('/accueil');
           },
           error: (reponse) => {

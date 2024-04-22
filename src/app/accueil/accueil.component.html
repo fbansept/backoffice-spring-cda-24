@@ -1,4 +1,10 @@
 <div class="container">
+  @if(authentification.utilisateur?.admin == 1) {
+  <a routerLink="/edit-produit" mat-raised-button color="primary">
+    Ajouter un article
+  </a>
+  }
+
   <div class="row">
     @for(produit of listeProduit; track produit.id) {
 
@@ -28,8 +34,14 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary">Ajouter au panier</button>
-          <button mat-raised-button color="accent">Modifier</button>
+          @if(authentification.utilisateur?.admin == 1) {
+          <button
+            mat-raised-button
+            color="accent"
+            [routerLink]="['/edit-produit', produit.id]"
+          >
+            Modifier
+          </button>
           <button
             mat-raised-button
             color="warn"
@@ -37,6 +49,7 @@
           >
             Supprimer
           </button>
+          }
         </mat-card-actions>
       </mat-card>
     </div>

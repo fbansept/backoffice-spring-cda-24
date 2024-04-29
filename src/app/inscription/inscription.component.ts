@@ -11,6 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-inscription',
@@ -49,7 +50,10 @@ export class InscriptionComponent {
 
     if (this.formulaire.valid && !this.motDePasseDifferent) {
       this.http
-        .post('http://localhost:8080/inscription', this.formulaire.value)
+        .post(
+          'http://' + environment.urlServeur + '/inscription',
+          this.formulaire.value
+        )
         .subscribe((resultat) => console.log(resultat));
     }
   }

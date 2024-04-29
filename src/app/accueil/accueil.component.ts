@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { LabelComponent } from '../label/label.component';
 import { RouterLink } from '@angular/router';
 import { AuthentificationService } from '../authentification.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-accueil',
@@ -20,14 +21,17 @@ export class AccueilComponent implements OnInit {
   listeProduit: any[] = [];
 
   ngOnInit(): void {
+
+    environment
+
     this.http
-      .get<any[]>('http://localhost:8080/produit/liste')
+      .get<any[]>('http://' + environment.urlServeur + '/produit/liste')
       .subscribe((listeProduit) => (this.listeProduit = listeProduit));
   }
 
   onSupprimerProduit(idProduit: number): void {
     this.http
-      .delete('http://localhost:8080/produit/' + idProduit)
+      .delete('http://' + environment.urlServeur + '/produit/' + idProduit)
       .subscribe((resultat) => console.log(resultat));
   }
 }

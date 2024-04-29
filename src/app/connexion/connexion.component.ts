@@ -12,6 +12,7 @@ import {
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../authentification.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-connexion',
@@ -44,7 +45,7 @@ export class ConnexionComponent {
     if (this.formulaire.valid) {
       this.http
         .post<{ jwt: string }>(
-          'http://localhost:8080/connexion',
+          'http://' + environment.urlServeur + '/connexion',
           this.formulaire.value
         )
         .subscribe({

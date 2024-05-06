@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
   styleUrl: './secured-img.component.scss',
 })
 export class SecuredImgComponent {
+  
   @Input()
   nomImage: string | null = null;
 

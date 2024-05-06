@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-edit-produit',
@@ -26,6 +27,7 @@ import { environment } from '../../environments/environment';
     FormsModule,
     ReactiveFormsModule,
     MatChipsModule,
+    MatIconModule,
   ],
   templateUrl: './edit-produit.component.html',
   styleUrl: './edit-produit.component.scss',
@@ -35,6 +37,8 @@ export class EditProduitComponent implements OnInit {
   formBuilder: FormBuilder = inject(FormBuilder);
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
+
+  fichierSelectionne: File | null = null;
 
   formulaire: FormGroup = this.formBuilder.group({
     nom: ['', [Validators.required]],
@@ -87,19 +91,29 @@ export class EditProduitComponent implements OnInit {
 
   onSubmit() {
     if (this.formulaire.valid) {
+      const donnees = new FormData();
+
+      donnees.append(
+        'produit',
+        new Blob([JSON.stringify(this.formulaire.value)], {
+          type: 'application/json',
+        })
+      );
+
+      if (this.fichierSelectionne) {
+        donnees.append('image', this.fichierSelectionne);
+      }
+
       if (this.idProduit) {
         this.http
           .put(
             'http://' + environment.urlServeur + '/produit/' + this.idProduit,
-            this.formulaire.value
+            donnees
           )
           .subscribe((resultat) => this.router.navigateByUrl('/accueil'));
       } else {
         this.http
-          .post(
-            'http://' + environment.urlServeur + '/produit',
-            this.formulaire.value
-          )
+          .post('http://' + environment.urlServeur + '/produit', donnees)
           .subscribe((resultat) => this.router.navigateByUrl('/accueil'));
       }
 
@@ -113,5 +127,9 @@ export class EditProduitComponent implements OnInit {
 
   comparateurParId(a: any, b: any) {
     return a != null && b != null && a.id == b.id;
+  }
+
+  onSelectionFichier(evenement: any) {
+    this.fichierSelectionne = evenement.target.files[0];
   }
 }

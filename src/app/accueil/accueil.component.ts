@@ -6,13 +6,20 @@ import { LabelComponent } from '../label/label.component';
 import { RouterLink } from '@angular/router';
 import { AuthentificationService } from '../authentification.service';
 import { environment } from '../../environments/environment';
+import { SecuredImgComponent } from '../secured-img/secured-img.component';
 
 @Component({
   selector: 'app-accueil',
   standalone: true,
   templateUrl: './accueil.component.html',
   styleUrl: './accueil.component.scss',
-  imports: [MatCardModule, MatButtonModule, LabelComponent, RouterLink],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    LabelComponent,
+    RouterLink,
+    SecuredImgComponent,
+  ],
 })
 export class AccueilComponent implements OnInit {
   http: HttpClient = inject(HttpClient);
@@ -21,9 +28,6 @@ export class AccueilComponent implements OnInit {
   listeProduit: any[] = [];
 
   ngOnInit(): void {
-
-    environment
-
     this.http
       .get<any[]>('http://' + environment.urlServeur + '/produit/liste')
       .subscribe((listeProduit) => (this.listeProduit = listeProduit));

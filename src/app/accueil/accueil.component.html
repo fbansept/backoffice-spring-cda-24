@@ -23,11 +23,8 @@
           </mat-card-title>
           <mat-card-subtitle>{{ produit.code }}</mat-card-subtitle>
         </mat-card-header>
-        <img
-          mat-card-image
-          src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-          alt="Photo of a Shiba Inu"
-        />
+
+        <secured-img mat-card-image [nomImage]="produit.nomImage" />
         <mat-card-content>
           <p>
             {{ produit.description }}

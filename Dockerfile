@@ -5,7 +5,7 @@ WORKDIR /app
 ENV GENERATED_SOURCEMAP false
 
 COPY package.json .
-RUN npm NODE_OPTIONS="--max-old-space-size=8192" install
+RUN NODE_OPTIONS="--max-old-space-size=8192" npm install
 
 COPY . .
 RUN npm run build

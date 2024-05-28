@@ -1,3 +1,3 @@
 export const environment = {
-  urlServeur: 'a_remplacer_par_ip_serveur',
+  urlServeur: '172.16.1.245',
 };
